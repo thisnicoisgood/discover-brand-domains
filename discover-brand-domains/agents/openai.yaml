@@ -1,0 +1,4 @@
+interface:
+  display_name: "品牌与域名检索"
+  short_description: "从网页和 Telegram 发现品牌、域名与公开合作入口"
+  default_prompt: "按品牌与域名检索流程盲搜，核实来源并与现有名单对比。"
