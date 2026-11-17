@@ -1,8 +1,8 @@
 # Discover Brand Domains
 
-适用于 Claude Code 和 Codex 的 Agent Skill。通过公开网页与 Telegram 频道发现品牌、域名和商务联系方式，保留来源，核对旧名单的遗漏，并可按要求整理为 Excel。
+适用于 Claude Code 和 Codex 的 Agent Skill。逐一搜索 Google、百度、Bing 和 Yahoo，并在 Telegram、X、Facebook 上找公开线索，再用找到的品牌名、账号和域名回搜。合并各来源的结果，核对旧名单的遗漏，并可按要求整理为 Excel。
 
-需要能搜索和读取公开网页的工具。搜索结果取决于可访问的数据源。导出 Excel 需要运行环境支持生成 `.xlsx`。
+需要能搜索和读取公开网页的工具。各搜索引擎和社交平台能否访问取决于运行环境。报告会逐个记录实际查询、访问方式和命中情况。导出 Excel 需要运行环境支持生成 `.xlsx`。
 
 ## 安装
 

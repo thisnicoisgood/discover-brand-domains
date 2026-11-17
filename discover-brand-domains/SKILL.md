@@ -1,6 +1,6 @@
 ---
 name: discover-brand-domains
-description: Use when the user asks to discover unknown website brands, domain names, or public business contacts from web and Telegram sources, audit a search for omissions, or compare a new discovery method with an existing domain list. Covers remote brand-blind discovery, Telegram channel descriptions and public posts, directories, linked mentions, source validation, and workbook reporting.
+description: Use when the user asks to discover unknown website brands, domains, or public business contacts, audit search omissions, or compare results with an existing domain list. Search Google, Baidu, Bing, and Yahoo individually, discover public leads on Telegram, X, and Facebook, and use those leads to find and verify websites. Supports brand-blind discovery, source coverage reporting, and Excel exports.
 ---
 
 # Discover Brand Domains
@@ -9,13 +9,27 @@ description: Use when the user asks to discover unknown website brands, domain n
 
 - 从用户的行业、地区、语言和目标开始。分别记录候选品牌、网站入口和公开商务联系方式。需要广告合作时，查明联系方式属于平台、代理商还是刊登广告的频道。
 - 有旧表时先读取最新版本，建立域名和品牌基线。用户提供过的名字、域名、频道和别名作为留出的验证样本。品牌盲搜时只使用通用词，事后再核对是否命中样本。
-- 默认使用远程搜索。通过多个索引、公开目录或数据源扩大覆盖。仅在服务明确给出底层引擎时记录引擎名。同一个服务的不同检索模式记录为模式。
+- 默认使用远程搜索。按主题拆分用户给出的词，分别保留原词和扩展词。扩展简繁写法、行业别称及「主题 + 站点功能」组合。每个主题至少保留宽查询，按任一主题命中收录，避免把多个主题强制合进一条查询。
+
+## 逐一搜索引擎和社交平台
+
+1. 逐一搜索 **Google、百度、Bing、Yahoo**。先给每个引擎跑同一批核心查询，随后按语言、地区和结果调整扩展查询。分别读取各自的结果页，或使用明确返回该引擎结果的搜索服务。记录实际引擎、访问入口或服务名称、查询词、地区语言和读取的页数或条数。通用网页搜索单独记为来源。若多个引擎有共同索引，仍分别记录各自实际返回的结果。
+2. 逐一查 **Telegram、X、Facebook** 的公开内容。优先用平台内搜索或可用的公开接口。遇到访问限制时，补查外部网页索引或公开目录，并注明线索来自哪种入口。以下检索可以从行业通用词开始，随后再用发现的品牌和账号查询。
+
+   | 平台 | 线索入口 | 网页索引补查 |
+   |---|---|---|
+   | Telegram | 公开频道简介、置顶、帖子、按钮和转发原文 | 分别查 `site:t.me`、`site:t.me/s/` 和公开频道目录 |
+   | X | 公开帖子、账号简介、置顶和引用帖 | 分别查 `site:x.com`、`site:twitter.com` |
+   | Facebook | 公开专页简介、帖子和公开群组中可读的内容 | 查 `site:facebook.com` 和公开专页名称 |
+
+3. 把社交帖子里的品牌、别名、账号、明文域名和公开外链作为新查询。先搜品牌或账号，再搭配「官网」「品牌名 + 业务词」等核对结果。对域名查公开引用与站方页面，沿明确相关的站点外链继续找候选。保留从发现到确认的路径，包括原帖 URL、摘录或可见线索、回搜词、命中 URL 和核查日期。对新发现的有效线索重复查询，直到用完约定的检索范围，或这一轮没有新的待查线索。
+4. 逐个记录引擎和平台的执行状态。区分「已读取结果」「已读取且无命中」「访问失败」「未测试」。社交平台另记站内搜索与外部索引搜索。碰到登录墙、地区限制或结果页读取失败时，记录限制和实际使用的替代入口。只有成功读到结果或明确的无结果提示，才算完成该入口的搜索。
 
 ## 并行发现候选
 
 | 入口 | 操作 |
 |---|---|
-| 网页搜索 | 按语言、地区和业务词组合查询。体育业务可分别用体育投注、滚球、盘口、足球贴士、运彩、sportsbook。综合平台另搜电子、真人、棋牌、捕鱼、体育。按需要翻页，记录实际查询和范围。 |
+| 网页搜索 | 按上节逐一执行。按语言、地区和业务词组合查询。体育业务可分别用体育投注、滚球、盘口、足球贴士、运彩、sportsbook。综合平台另搜电子、真人、棋牌、捕鱼、体育。 |
 | 行业名录 | 从赔率供应商的博彩公司列表、比较站和当地监管名录提取品牌及域名。使用牌照来源核对特定地区的授权和运营主体。 |
 | Telegram 原帖 | 从公开的频道简介、置顶帖、品牌发布帖和冠名广告正文提取域名。搜索 国内线路、海外线路、备用网址、官方频道、客服、会员聊天群、官方招商。用多组短查询，也试繁体和近义词。 |
 | Telegram 目录 | 分别查 Nicegram、TGFind、Telemetr 等公开索引及其体育、游戏、新闻分类。独立搜索频道简介和帖子，覆盖原帖未被网页索引的场景。 |
@@ -41,8 +55,8 @@ description: Use when the user asks to discover unknown website brands, domain n
 1. 保存原始来源、查询、命中页面、可辨认的原帖日期与核查日期。从正文和外链提取域名，同时识别没有协议的域名和裸域名。只保留在明确品牌语境里出现的入口。排除钱包、推广中转、下载地址和无关引用，范围式域名未单独核实时保留为文字备注。
 2. 域名用公共后缀规则归并，保留原始主机与地区入口。凭同一条公开简介、公告或站方页面明确列出的关系归并品牌。名称相似、同 IP、同证书或数字编号可用于提线索，品牌归属仍须另核。对冠名只确认冠名关系。
 3. 分别核查域名归属、页面可读性、正文是否证实目标业务、恶意软件或钓鱼信誉。检查主域、公开栏目和跳转；把抓取失败、JS 框架、历史快照、地区限制分别标明。没有可靠安全判定时记录待核。来源为频道自述时标明。
-4. 合并各来源的并集，单独标记交集。按方法记候选域名、相对旧表净增、同品牌入口、页面可读和目标业务已验证。对比实验使用相同的结果上限，写明样本、人工筛选边界、重复和未核项。若只核对部分命中，给出可复核的下限。未跑过的方法保持未测试。
-5. 输出 Excel 时把「全部网站」设为首页。一域名一行，显示网站、域名、类型、状态、公开联系、合作入口。将来源、核查详情和搜索对比放在后页。待核域名可用纯文本，链接指向公开证据。保留原记录并验证筛选范围、链接与计数。
+4. 合并各来源的并集，单独标记交集。逐引擎和平台统计候选域名、仅该来源命中的域名和相对旧表的新增域名。同一域名可被多来源命中，全局净增按合并后的去重名单计算。对比实验使用相同的结果上限，写明范围、重复和未核项。只核对部分命中时，给出可复核的下限。访问失败和未测试的入口将新增数量留空。
+5. 输出 Excel 时把「全部网站」设为首页。一域名一行，显示网站、域名、类型、状态、公开联系、合作入口。将来源、线索回搜、核查详情和搜索覆盖放在后页。待核域名可用纯文本，链接指向公开证据。保留原记录并验证筛选范围、链接与计数。
 
 ## 示例
 
